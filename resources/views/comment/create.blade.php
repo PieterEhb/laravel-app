@@ -8,19 +8,14 @@
                 <div class="card-header">Edit profile</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('comment.store') }}">
+                    <form method="POST" action="{{ route('addComment',$news->id) }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="title" class="col-md-4 col-form-label text-md-end">Title:</label>
+                            <label for="title" class="col-md-4 col-form-label text-md-end">NewsPost:</label>
 
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
-
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <h4>{{$news->title}}</h4>
+                                <p>{{$news->message}}</p>
                             </div>
                         </div>
 
@@ -36,21 +31,8 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="images" class="col-md-4 col-form-label text-md-end">this will be update add images</label>
-
-                            <div class="col-md-6">
-                                <input id="images" type="images" class="form-control @error('email') is-invalid @enderror" name="email" value=""autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        
                             <button type="submit">Create</button>
-
                     </form>
                 </div>
             </div>

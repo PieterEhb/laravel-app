@@ -32,9 +32,12 @@ Route::post('/user/changepassword/{id}',[UserController::class, 'changePasswordS
 
 /*News routes*/
 Route::resource('news',NewsController::class);
+Route::get('/news/{newsId}/addComment',[CommentController::class,'comment'])->name('comment');
+Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name('addComment');
 
 /*Comments routes*/
-Route::resource('comment',CommentController::class);
+/* Route::get('/comment/{newsId}',[CommentController::class,'comment'])->name('comment');
+Route::post('/comment/{newsId}/user/{userId}',[CommentController::class,'add'])->name('addComment'); */
 
 /*Auth Routes*/
 Auth::routes();

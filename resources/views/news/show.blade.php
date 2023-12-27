@@ -11,11 +11,17 @@
                 <div class="card-body">
                     <h3>{{ $news->title}}</h3>
                     <p>{{$news->message}}</p>
+                    @foreach ($news->comment as $comment )
+                        <small>{{$comment->message}}</small>
+                        <br>
+                        <small><a href="{{route('user.profile', $comment->user->id)}}">{{$comment->user->name}}</a></small>
+                        <hr>
+                    @endforeach
                     @if (Auth::user()->is_admin)
                     <a href="{{route('news.edit', $news->id)}}">Edit</a>
                     @endif
                     <br>
-                    <a href="{{route('comment.create', $news->id)}}">Comment</a>
+                    <a href="{{route('comment', $news->id)}}">Comment</a>
                 </div>
 
             </div>
