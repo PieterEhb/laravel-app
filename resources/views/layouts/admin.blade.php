@@ -18,7 +18,7 @@
 </head>
 <body>
     <div id="app">
-    @include('partials.header')
+        @include('partials.adminheader')
         <main class="py-4">
             @yield('content')
         </main>

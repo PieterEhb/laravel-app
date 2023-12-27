@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactformController;
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +38,17 @@ Route::get('/news/{newsId}/addComment',[CommentController::class,'comment'])->na
 Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name('addComment');
 
 /*Comments routes*/
-/* Route::get('/comment/{newsId}',[CommentController::class,'comment'])->name('comment');
-Route::post('/comment/{newsId}/user/{userId}',[CommentController::class,'add'])->name('addComment'); */
+Route::get('/comment/{id}',[CommentController::class,'edit'])->name('comment.edit');
+Route::post('/comment/update/{id}',[CommentController::class,'update'])->name('comment.update');
+Route::post('/comment/delete/{id}',[CommentController::class,'delete'])->name('comment.delete');
+
+/*contactForm routes*/
+Route::resource('/contactForm', ContactformController::class);
+
+/*order routes*/
+
+/*FAQ routes*/
+Route::resource('/faq', QuestionController::class);
 
 /*Auth Routes*/
 Auth::routes();

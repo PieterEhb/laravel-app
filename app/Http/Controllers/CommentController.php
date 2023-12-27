@@ -37,4 +37,30 @@ class CommentController extends Controller
         $comment->save();
         return redirect()->route('news.show',$newsId);
     }
+
+    public function edit($id){
+        $comment = comment::findOrFail($id);
+        return view('comment.edit', compact('comment'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $comment = comment::findOrFail($id);
+        $validated = $request->validate(
+            [
+                'message' => 'required|min:5'
+            ]
+        );
+        $comment->message = $validated['message'];
+        $newsId = $comment->news->id;
+        $comment->save();
+        return redirect()->route('news.show',$newsId);
+    }
+
+    public function delete($id){
+        $comment = comment::findOrFail($id);
+        $newsId = $comment->news->id;
+        $comment->delete();
+        return redirect()->route('news.show',$newsId);
+    }
 }

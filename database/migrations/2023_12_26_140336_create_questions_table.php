@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('question',250);
             $table->string('response',250);
             $table->integer('user_id');
+            $table->enum('status',['new','notShown','shown']);
             $table->integer('respones_by');
             $table->timestamps();
         });
