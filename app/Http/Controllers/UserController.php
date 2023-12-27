@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\userinfo;
+use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,26 +16,32 @@ class UserController extends Controller
         $this->middleware('auth', ['except' => ['profile']]);
     }
 
+    protected function createUserinfo($userId){
+        //lookup userinfo
+        $userinfo = userinfo::where('user_id', '=', $userId)->first();
+
+        if ($userinfo == null) {
+            $userinfo = new userinfo();
+            $userinfo->user_id = $userId;
+            $userinfo->save();
+            error_log('added record');
+        }
+        return;
+    }
     public function profile($id)
     {
         $user = User::where('id', '=', $id)->first();
+        $this->createUserinfo($id);
         return view('user.profile', compact('user'));
     }
 
     public function edit($userId)
     {
-
-        $user = User::where('id', '=', $userId)->first();
-
-        //lookup userinfo
-        $userinfo = userinfo::where('user_id', '=', $user->id)->first();
-
-        if ($userinfo == null) {
-            $userinfo = new userinfo();
-            $userinfo->user_id = $user->id;
-            $userinfo->save();
-            error_log('added record');
+        if($userId != Auth::user()->id){
+            abort(403,'you are not allowed here');
         }
+        $user = User::where('id', '=', $userId)->first();
+        $this->createUserinfo($user->id);
         return view('user.edit', compact('user'));
     }
 

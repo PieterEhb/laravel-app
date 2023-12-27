@@ -19,7 +19,7 @@
                         <h2>User info</h2>
                         <p>username: {{$user->name}}</p>
                         @auth
-                        @if($user->name == Auth::user()->name)
+                        @if($user->id == Auth::user()->id)
                         <p>password: {{Str::mask($user->name, '*',0)}}</p> <a href="{{route('user.changePassword', Auth::user()->id)}}">Change password</a>
                         <p>email: {{$user->email}}</p>
                         @endif
@@ -28,8 +28,11 @@
                         <br>
                         Bio: {{$user->userinfo->bio}}
                         <br>
+                        @auth
+                        @if($user->id == Auth::user()->id)
                         <a href="{{ route('user.edit', Auth::user()->id) }} ">Edit Profile</a>
-                    
+                        @endif
+                        @endauth
                 </div>
             </div>
         </div>

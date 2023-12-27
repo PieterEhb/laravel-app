@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->date('birthday')->default('1970/01/01');
-            $table->string('bio')->default('such empty');
+            $table->string('bio',250)->default('such empty');
             $table->integer('image_id')->default(0);
             $table->timestamps();
         });

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->string('response');
+            $table->string('question',250);
+            $table->string('response',250);
             $table->integer('user_id');
             $table->integer('respones_by');
             $table->timestamps();

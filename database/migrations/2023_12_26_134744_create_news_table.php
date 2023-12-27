@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('message');
+            $table->string('title',50);
+            $table->string('message',1000);
             $table->integer('image_id');
             $table->integer('user_id');
             $table->timestamps();

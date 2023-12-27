@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\news;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $newsPosts = News::latest()->take(5)->get();
+        return view('home',compact('newsPosts'));
     }
 }
