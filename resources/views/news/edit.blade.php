@@ -8,7 +8,7 @@
                 <div class="card-header">Edit news</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('news.update', $news->id) }}">
+                    <form method="POST" action="{{ route('news.update', $news->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
@@ -39,11 +39,12 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="images" class="col-md-4 col-form-label text-md-end">this will be update add images</label>
+                            <label for="images" class="col-md-4 col-form-label text-md-end">update image</label>
 
                             <div class="col-md-6">
-                                <input id="images" type="images" class="form-control @error('email') is-invalid @enderror" name="email" value="" autofocus>
-                                @error('email')
+                            <input type="file" name="image" class="form-control" placeholder="image" id="image" accept="image/*">
+                            <img src="/storage/app/public/newsimages/{{ $news->image }}" width="300px">
+                                @error('image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

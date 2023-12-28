@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\news;
 use App\Models\comment;
-
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -27,15 +28,25 @@ class NewsController extends Controller
 /*         if(!$user->is_admin){
             abort(403);
         } */
-        $validate = $request->validate([
-            'title' =>'required|min:5',
-            'message' => 'required|min:20'
+        //dd($request);
+        error_log('we get here');
+        $validated = $request->validate([
+            'title' =>'required|min:4',
+            'message' => 'required|min:4',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
+        dd($validated);
+        if ($image = $validated['image']){
+            $destinationPath = 'storage/app/public/newsimages/';
+            $newsImage = "newsimage".date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $newsImage);
+        }
+        error_log('we get here 2');
         $newsPost = new news();
-        $newsPost->title = $validate['title'];
-        $newsPost->message = $validate['message'];
+        $newsPost->title = $validated['title'];
+        $newsPost->message = $validated['message'];
         $newsPost->user_id = $user->id;
-        $newsPost->image_id = 0;
+        $newsPost->image = $newsImage;
         $newsPost->save();
         return redirect()->route('news.index')->with('success', "Post made Successfully");
     }
@@ -66,14 +77,25 @@ class NewsController extends Controller
 /*         if(!$user->is_admin){
             abort(403);
         } */
-        $validate = $request->validate([
+        $validated = $request->validate([
             'title' =>'required|min:5',
-            'message' => 'required|min:20'
+            'message' => 'required|min:20',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
-        $newsPost->title = $validate['title'];
-        $newsPost->message = $validate['message'];
+        $newsPost->title = $validated['title'];
+        $newsPost->message = $validated['message'];
         $newsPost->user_id = $user->id;
-        $newsPost->image_id = 0;
+        if (Arr::exists($validated,'image')) { 
+            /*Delete old image*/
+            $oldImage=$newsPost->image;
+            Storage::delete($oldImage);
+            /*Set new image*/
+            $image = $validated['image'];           
+            $destinationPath = 'storage/app/public/newsimages/';
+            $newsImage = "newsimage".date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $newsImage);
+            $newsPost->image = $newsImage;
+        }
         $newsPost->save();
         return redirect()->route('news.index')->with('success', "Post made Successfully");
     }

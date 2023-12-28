@@ -38,11 +38,11 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">this will be update avatar</label>
+                            <label for="avatar" class="col-md-4 col-form-label text-md-end">upload avatar</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="image" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->userinfo->avatar }}"autofocus>
-                                @error('email')
+                            <input type="file" name="avatar" class="form-control" placeholder="avatar" id="avatar" accept="image/*">
+                                @error('avatar')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

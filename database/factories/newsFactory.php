@@ -19,9 +19,8 @@ class newsFactory extends Factory
     {
         return [
             'user_id' => 1,
-            'title' => fake()->title(),
-            'message' => fake()->paragraph(),
-            'image_id' => 0
+            'title' => fake()->word(),
+            'message' => fake()->paragraph()
         ];
     }
 }

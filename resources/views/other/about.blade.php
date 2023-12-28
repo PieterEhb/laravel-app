@@ -7,3 +7,4 @@
 <p>Bootstrap</p>
 <p>admin middleware: https://www.appfinz.com/blogs/laravel-middleware-for-auth-admin-users-roles/</p>
 <p>dropdown menu: https://stackoverflow.com/questions/54029008/need-to-create-a-drop-down-list-in-laravel-and-insert-the-results-in-a-new-data</p>
+<p>images: https://www.itsolutionstuff.com/post/laravel-10-crud-with-image-upload-tutorialexample.html</p>

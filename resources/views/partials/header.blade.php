@@ -7,9 +7,8 @@
                 <a class="navbar-brand" href="{{ route('news.index') }}">
                      News
                 </a>
-
-                <a class="navbar-brand" href="{{ route('home') }}">
-                     ORDER
+                <a class="navbar-brand" href="{{ route('news.create') }}">
+                     Create news
                 </a>
 
                 <a class="navbar-brand" href="{{ route('faq.index') }}">
@@ -18,7 +17,6 @@
                 <a class="navbar-brand" href="{{ route('contactForm.create') }}">
                      Contact us
                 </a>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

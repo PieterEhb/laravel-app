@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -53,14 +55,25 @@ class UserController extends Controller
         $validated = $request->validate(
             [
                 'birthday' => 'required|min:3',
-                'bio' => 'required|min:20'
+                'bio' => 'required|min:20',
+                'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]
         );
+        if (Arr::exists($validated,'avatar')) { 
+            /*Delete old image*/
+            $oldImage=$userinfo->image;
+            Storage::delete($oldImage);
+            /*Set new image*/
+            $image = $validated['avatar'];           
+            $destinationPath = 'storage/app/public/newsimages/';
+            $avatar = "avatar".date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $avatar);
+            $userinfo->image = $avatar;
+        }
         $userinfo->birthday = $validated['birthday'];
         $userinfo->bio = $validated['bio'];
         $userinfo->save();
         return redirect()->route('user.profile', $user->id)->with('success', "Profile Changed Successfully");
-        // return view('posts.index');
 
     }
 
