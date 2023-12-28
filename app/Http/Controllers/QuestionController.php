@@ -4,61 +4,87 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\question;
+use App\Models\questioncategory;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' =>['index']]);
+        $this->middleware('auth', ['except' => ['index']]);
+        $this->middleware('admin',['except'=>['index','create','store']]);
     }
 
-    /* public function index(){
-        if(!Auth::user()->is_admin){
-            abort(403,'only admins can delete contactForms');
-        }
-        $contactForms = contactForm::latest()->get();
-        return view('contactForm.index',compact('contactForms'));
+    public function index()
+    {
+        $questions = question::where('status', '=', 'shown')->latest()->get();
+        $questioncategories = questioncategory::all();
+        //dd($questions);
+        return view('faq.index', compact('questions','questioncategories'));
     }
 
-    public function create(){
-        return view('contactForm.create');
+    public function create()
+    {
+        $questioncategeories = questioncategory::get();
+        return view('faq.create', compact('questioncategeories'));
     }
 
-    public function store(Request $request){
-        $validate = $request->validate([
-            'name' =>'required|min:5',
-            'email' =>'required|email',
-            'message' => 'required|min:10'
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'question' => 'required|min:4',
+            'category' => 'required|exists:questioncategories,id'
         ]);
-        $contactForm = new contactForm();
-        $contactForm->name = $validate['name'];
-        $contactForm->email = $validate['email'];
-        $contactForm->message = $validate['message'];
-        $contactForm->status = 'new';
-        $contactForm->save();
-        return redirect()->route('home')->with('success', "Question made Successfully");
+        $question = new question();
+        $question->question = $validated['question'];
+        $question->category_id = $validated['category'];
+        $question->user_id = Auth::user()->id;
+        $question->status = 'new';
+        $question->save();
+        return redirect()->route('faq.index')->with('success', "Question made Successfully");
     }
 
-    public function show($id){
-        $contactForm = contactForm::findOrFail($id);
-        return view('contactForm.show', compact('contactForm'));
+    public function show($id)
+    {
+        $question = question::findOrFail($id);
+        return view('faq.show', compact('question'));
     }
 
-    public function edit(){
-            abort(404,'nothing here');
-    }
-
-    public function update(){
-        abort(404,'nothing here');
-    }
-
-    public function destroy($id){
+    public function edit($id)
+    {
+        $question = question::findOrFail($id);
         if(!Auth::user()->is_admin){
-            abort(403,'only admins can delete contactForms');
+            abort(403);
         }
-        $contactForm = contactForm::findOrFail($id);
-        $contactForm->delete();
-        return redirect()->route('contactForm.index')->with('success', 'contactForm deleted');
-    } */
+        $questioncategeories = questioncategory::get();
+        return view('faq.edit', compact('question','questioncategeories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $question = question::findOrFail($id);
+        $validated = $request->validate([
+            'question' => 'required|min:3',
+            'response' => 'required|min:2',
+            'category' => 'required|exists:questioncategories,id',
+            'status' => 'in:shown,notShown|required'
+        ]);
+        $question->question = $validated['question'];
+        $question->question = $validated['response'];
+        $question->category_id = $validated['category'];
+        $question->status = $validated['status'];
+        $question->save();
+        return redirect()->route('faq.index')->with('success', "Question Answered Successfully");
+    }
+
+    public function destroy($id)
+    {
+        if (!Auth::user()->is_admin) {
+            abort(403, 'only admins can delete questions');
+        }
+        $question = question::findOrFail($id);
+        $question->delete();
+        return redirect()->route('faq.index')->with('success', 'question deleted');
+    }
 }

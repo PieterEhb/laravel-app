@@ -15,6 +15,7 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' =>['index','show']]);
+        $this->middleware('admin',['except'=>['index','show']]);
     }
 
     public function index(){
@@ -23,9 +24,9 @@ class NewsController extends Controller
     }
     public function store(Request $request){
         $user = Auth::user();
-        if(!$user->is_admin){
+/*         if(!$user->is_admin){
             abort(403);
-        }
+        } */
         $validate = $request->validate([
             'title' =>'required|min:5',
             'message' => 'required|min:20'
@@ -40,9 +41,9 @@ class NewsController extends Controller
     }
 
     public function create(){
-        if(!Auth::user()->is_admin){
+/*         if(!Auth::user()->is_admin){
             abort(403);
-        }
+        } */
         return view('news.create');
     }
 
@@ -62,9 +63,9 @@ class NewsController extends Controller
     public function update($id, Request $request){
         $newsPost = news::findOrFail($id);
         $user = Auth::user();
-        if(!$user->is_admin){
+/*         if(!$user->is_admin){
             abort(403);
-        }
+        } */
         $validate = $request->validate([
             'title' =>'required|min:5',
             'message' => 'required|min:20'

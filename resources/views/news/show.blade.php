@@ -15,9 +15,11 @@
                         <small>{{$comment->message}}</small>
                         <br>
                         <small><a href="{{route('user.profile', $comment->user->id)}}">{{$comment->user->name}}</a></small>
+                        @auth
                         @if (Auth::user()->id == $comment->user->id)
                         <small><a href="{{route('comment.edit', $comment->id)}}">edit</a></small>
                         @endif
+                        @endauth
                         <hr>
                     @endforeach
                     @auth

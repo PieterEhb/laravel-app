@@ -12,7 +12,7 @@
                      ORDER
                 </a>
 
-                <a class="navbar-brand" href="{{ route('home') }}">
+                <a class="navbar-brand" href="{{ route('faq.index') }}">
                      FAQ
                 </a>
                 <a class="navbar-brand" href="{{ route('contactForm.create') }}">

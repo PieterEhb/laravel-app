@@ -12,8 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
-
         \App\Models\User::factory()->create([
             'name' => 'Test',
             'email' => 'pieter.de.pauw@student.ehb.be',
@@ -28,5 +26,6 @@ class DatabaseSeeder extends Seeder
          ]);
          
          \App\Models\news::factory(10)->create();
+         \App\Models\question::factory(3)->create();
     }
 }
