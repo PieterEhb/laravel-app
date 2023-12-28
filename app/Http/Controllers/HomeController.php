@@ -27,4 +27,9 @@ class HomeController extends Controller
         $newsPosts = News::latest()->take(5)->get();
         return view('home',compact('newsPosts'));
     }
+
+    public function about()
+    {
+        return view('other.about');
+    }
 }

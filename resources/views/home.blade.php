@@ -3,31 +3,26 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+        <div class="col-md-12">
+            <div class="card border-dark  mb-2">
+                <div class="card-header bg-dark text-white">About the game</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                <div class="card-body bg-secondary text-white">
+                    <p>
+                        Factorio is a game in which you build and maintain factories.
+                        <br>
+                        You will be mining resources, researching technologies, building infrastructure, automating production, and fighting enemies. Use your imagination to design your factory, combine simple elements into ingenious structures, apply management skills to keep it working, and protect it from the creatures who don't really like you.
+                    </p>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">News</div>
+            <div class="card border-dark bg-dark col-md-6">
+                <div class="card-header bg-dark text-white">News</div>
                 @foreach ($newsPosts as $newspost )
-                <div class="card-body">
-                    <h3><a href="{{route('news.show', $newspost->id) }}">{{ $newspost->title}}</a></h3>
-                    <p>{{$newspost->message}}</p>
-                    <small>posted by <a href="{{ route('user.profile',$newspost->user_id )}}">{{$newspost->user->name}}</a></small>
+                @include('partials.news overview partial')
+                    @endforeach
                 </div>
-                @endforeach
+
             </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection
