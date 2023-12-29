@@ -19,10 +19,16 @@ class NewsController extends Controller
         $this->middleware('admin', ['except' => ['index', 'show']]);
     }
 
-    public function index()
+    public function Index()
     {
-        $newsPosts = News::latest()->paginate(5);
+        $newsPosts = News::where('status','=','released')->latest()->paginate(5);
         return view('news.index', compact('newsPosts'));
+    }
+
+    public function adminIndex()
+    {
+        $newsPosts = News::orderby('status','asc')->latest()->paginate(5)->withQueryString();
+        return view('news.admin', compact('newsPosts'));
     }
     public function store(Request $request)
     {
