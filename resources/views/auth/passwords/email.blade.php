@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+            <div class="card bg-dark">
+                <div class="card-header" style="color: orange;">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
+                <div class="card-body text-white">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -33,7 +33,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-warning">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
                             </div>

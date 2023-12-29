@@ -18,7 +18,8 @@ class UserController extends Controller
         $this->middleware('auth', ['except' => ['profile']]);
     }
 
-    protected function createUserinfo($userId){
+    protected function createUserinfo($userId)
+    {
         //lookup userinfo
         $userinfo = userinfo::where('user_id', '=', $userId)->first();
 
@@ -39,8 +40,8 @@ class UserController extends Controller
 
     public function edit($userId)
     {
-        if($userId != Auth::user()->id){
-            abort(403,'you are not allowed here');
+        if ($userId != Auth::user()->id) {
+            abort(403, 'you are not allowed here');
         }
         $user = User::where('id', '=', $userId)->first();
         $this->createUserinfo($user->id);
@@ -50,23 +51,22 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        $userinfo = userinfo::where('user_id','=',$user->id)->first();
-        
+        $userinfo = userinfo::where('user_id', '=', $user->id)->first();
         $validated = $request->validate(
             [
-                'birthday' => 'required|min:3',
-                'bio' => 'required|min:20',
+                'birthday' => 'required',
+                'bio' => 'required|min:4',
                 'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]
         );
-        if (Arr::exists($validated,'avatar')) { 
+        if (Arr::exists($validated, 'avatar') && $validated['avatar'] != null) {
             /*Delete old image*/
-            $oldImage=$userinfo->image;
+            $oldImage = $userinfo->image;
             Storage::delete($oldImage);
             /*Set new image*/
-            $image = $validated['avatar'];           
-            $destinationPath = 'storage/app/public/newsimages/';
-            $avatar = "avatar".date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image = $validated['avatar'];
+            $destinationPath = 'storage/app/public/avatarImages/';
+            $avatar = "avatar" . date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $avatar);
             $userinfo->image = $avatar;
         }
@@ -74,7 +74,6 @@ class UserController extends Controller
         $userinfo->bio = $validated['bio'];
         $userinfo->save();
         return redirect()->route('user.profile', $user->id)->with('success', "Profile Changed Successfully");
-
     }
 
     public function changePassword($id)
@@ -85,8 +84,8 @@ class UserController extends Controller
 
     public function changePasswordSave($userId, Request $request)
     {
-        if($userId != Auth::user()->id){
-            abort(403,'Not authorized');
+        if ($userId != Auth::user()->id) {
+            abort(403, 'Not authorized');
         }
         $validated = $request->validate([
             'current_password' => 'required|string',

@@ -23,6 +23,18 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label for="response" class="col-md-4 col-form-label text-md-end">Response:</label>
+
+                            <div class="col-md-6">
+                                <textarea name="response" id="response" cols="30" rows="10" class="form-control @error('response') is-invalid @enderror">{{ old('response') }}</textarea>
+                                @error('response')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="category" class="col-md-4 col-form-label text-md-end">category:</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="category" name="category" required focus>
@@ -33,7 +45,13 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit">submit question</button>
+                        <div class="row mb-3">
+                            <div class="col-md-4 col-form-label"></div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-warning">submit question</button>
+                            </div>
+
+                        </div>
                     </form>
                 </div>
             </div>

@@ -57,7 +57,19 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit">Save question</button>
+                        <div class="row mb-3">
+                            <div class="col-md-4 col-form-label"></div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-warning">Save question</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <form method="POST" action="{{ route('faq.destroy', $question->id) }}">
+                        @csrf
+                        @method('Delete')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </div>
             </div>

@@ -34,10 +34,12 @@ class QuestionController extends Controller
     {
         $validated = $request->validate([
             'question' => 'required|min:4',
+            'response' => 'required|min:4',
             'category' => 'required|exists:questioncategories,id'
         ]);
         $question = new question();
         $question->question = $validated['question'];
+        $question->question = $validated['response'];
         $question->category_id = $validated['category'];
         $question->user_id = Auth::user()->id;
         $question->status = 'new';
@@ -71,7 +73,7 @@ class QuestionController extends Controller
             'status' => 'in:shown,notShown|required'
         ]);
         $question->question = $validated['question'];
-        $question->question = $validated['response'];
+        $question->response = $validated['response'];
         $question->category_id = $validated['category'];
         $question->status = $validated['status'];
         $question->save();
