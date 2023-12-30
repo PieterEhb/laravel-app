@@ -12,14 +12,15 @@ class ContactformController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' =>['create','store']]);
+        $this->middleware('admin', ['except' =>['create','store']]);
     }
 
     public function index(){
         if(!Auth::user()->is_admin){
-            abort(403,'only admins can delete contactForms');
+            abort(403,'only admins can see contactForms');
         }
-        $contactForms = contactForm::latest()->get();
-        return view('contactForm.index',compact('contactForms'));
+        $contactforms = contactForm::latest()->get();
+        return view('contactForm.index',compact('contactforms'));
     }
 
     public function create(){
@@ -38,7 +39,7 @@ class ContactformController extends Controller
         $contactForm->message = $validate['message'];
         $contactForm->status = 'new';
         $contactForm->save();
-        return redirect()->route('home')->with('success', "Question made Successfully");
+        return redirect()->route('home');
     }
 
     public function show($id){
@@ -46,12 +47,20 @@ class ContactformController extends Controller
         return view('contactform.show', compact('contactform'));
     }
 
-    public function edit(){
-            abort(404,'nothing here');
+    public function edit($id){
+        $contactform = contactForm::findOrFail($id);
+        return view('contactform.edit', compact('contactform'));
     }
 
-    public function update(){
-        abort(404,'nothing here');
+    public function update($id,Request $request){
+        $contactform = contactForm::findOrFail($id);
+        $validate = $request->validate([
+            'response' => 'required|min:10'
+        ]);
+        $contactform->response = $validate['response'];
+        $contactform->status = 'finished';
+        $contactform->save();
+        return redirect()->route('contactform.index');
     }
 
     public function destroy($id){
@@ -60,6 +69,6 @@ class ContactformController extends Controller
         }
         $contactForm = contactForm::findOrFail($id);
         $contactForm->delete();
-        return redirect()->route('contactForm.index')->with('success', 'contactForm deleted');
+        return redirect()->route('contactform.index');
     }
 }

@@ -27,10 +27,7 @@
                         <iframe class="mt-2" width="620" height="400" src="https://www.youtube.com/embed/J8SBp4SyvLc" title="Factorio - Trailer 2020" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     </div>
 </div>

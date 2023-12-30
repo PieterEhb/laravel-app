@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name',50);
             $table->string('email');
             $table->string('message',250);
-            $table->enum('status',['new','inProgress','finished']);
+            $table->string('response')->nullable();
+            $table->enum('status',['new','finished']);
             $table->integer('user_id')->default(0);
             $table->timestamps();
         });
