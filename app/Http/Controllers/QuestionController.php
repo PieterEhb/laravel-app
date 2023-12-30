@@ -19,7 +19,7 @@ class QuestionController extends Controller
     public function adminIndex()
     {
         $questions = question::all();
-        $questioncategories = questioncategory::all();
+        $questioncategories = questioncategory::orderby('sequence','asc')->get();
         //dd($questions);
         return view('faq.adminIndex', compact('questions','questioncategories'));
     }
@@ -27,7 +27,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = question::where('status', '=', 'shown')->latest()->get();
-        $questioncategories = questioncategory::where('status', '=', 'shown')->get();
+        $questioncategories = questioncategory::where('status', '=', 'shown')->orderby('sequence','asc')->get();
         //dd($questions);
         return view('faq.index', compact('questions','questioncategories'));
     }
@@ -50,7 +50,6 @@ class QuestionController extends Controller
         $question->question = $validated['question'];
         $question->response = $validated['response'];
         $question->category_id = $validated['category'];
-        $question->user_id = Auth::user()->id;
         $question->status = $validated['status'];
         $question->save();
         return redirect()->route('faq.adminFAQ');

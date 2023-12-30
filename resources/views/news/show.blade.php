@@ -19,6 +19,14 @@
                     </div>
                     <br>
                     <a class="btn btn-warning" href="{{route('comment', $news->id)}}">Comment</a>
+                    @auth
+                    @if($news->likes()->where('user_id', '=', Auth::user()->id)->first() != null)
+                    @else
+                    <a class="btn btn-warning" href="{{route('like',$news->id)}}">like post</a>
+                    @endif
+                    @endauth
+                    <br>
+                    <p class="text-white">Post heeft {{ $news->likes()->count() }} likes</p>
                     <hr class="m-2">
                     @foreach ($news->comment->sortByDesc('updated_at') as $comment )
                     <div class="row">
@@ -36,6 +44,7 @@
                                             <small><a class="btn btn-warning" href="{{route('comment.edit', $comment->id)}}">edit</a></small>
                                             @endif
                                             @endauth
+                                            <hr>
                                         </div>
                                         <div class="col text-end">
                                             @if (($comment->report->where('user_id','=',Auth::user()->id)->count()) == 0)

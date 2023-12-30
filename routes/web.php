@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactformController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\QuestioncategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportsController;
@@ -43,7 +44,7 @@ Route::get('/news/{newsId}/admin',[NewsController::class,'adminShow'])->name('ne
 Route::resource('news',NewsController::class);
 Route::get('/news/{newsId}/addComment',[CommentController::class,'comment'])->name('comment');
 Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name('addComment');
-
+Route::get('like/{newsId}', [LikeController::class, 'like'])->name('like');
 
 
 /*Comments routes*/

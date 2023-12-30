@@ -30,10 +30,12 @@ class QuestioncategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:4|unique:questioncategories',
             'status' => 'in:shown,notShown|required',
+            'sequence' => 'numeric|gt:0'
         ]);
         $questionCategory = new questioncategory();
         $questionCategory->name = $validated['name'];
         $questionCategory->status = $validated['status'];
+        $questionCategory->sequence = $validated['sequence'];
         $questionCategory->save();
         return redirect()->route('faq.adminFAQ');
     }
@@ -52,9 +54,11 @@ class QuestioncategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:4|unique:questioncategories',
             'status' => 'in:shown,notShown|required',
+            'sequence' => 'numeric|gt:0'
         ]);
         $questionCategory->name = $validated['name'];
         $questionCategory->status = $validated['status'];
+        $questionCategory->sequence = $validated['sequence'];
         $questionCategory->save();
         return redirect()->route('faq.adminFAQ');
     }
@@ -66,8 +70,6 @@ class QuestioncategoryController extends Controller
         $questionCategory = questionCategory::findOrFail($id);
         $questions = question::where('category_id', '=', $id)->delete();
         $questionCategory->delete();
-        return redirect()->route('faq.adminFAQ');
-        $questionCategory = questioncategory::findOrFail($id);
         return redirect()->route('faq.adminFAQ');
     }
 }

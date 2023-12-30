@@ -2,7 +2,7 @@
     <div class="row g-0">
             <div class="card-body p-2">
                 <div class="col">
-                    <h4 style="color: orange"><a href="">{{ $comment->news->title}}</a></h4>
+                    <h4 style="color: orange"><a style="color: orange;text-decoration: none"  href="{{ route('news.adminShow', $comment->news->id) }}">{{ $comment->news->title}}</a></h4>
                     <p class=" mb-1">Comment: {{ $comment->message}}</p>
                     <small class=" mb-1">Qty Reports: {{ $comment->report->count()}}</small>
                 </div>

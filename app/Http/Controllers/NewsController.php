@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\news;
 use App\Models\comment;
+use App\Models\like;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -133,6 +134,7 @@ class NewsController extends Controller
         $news = news::findOrFail($id);
         //delete file from storage
         $comment = Comment::where('news_id', '=', $news->id)->delete();
+        $likes = Like::where('news_id','=',$news->id)->delete();
         $news->delete();
         return redirect()->route('news.adminNews');
     }

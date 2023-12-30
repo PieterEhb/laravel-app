@@ -11,11 +11,21 @@
                     <form method="POST" action="{{ route('faqcategories.store') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="question" class="col-md-4 col-form-label text-md-end">Category:</label>
-
+                            <label for="name" class="col-md-4 col-form-label text-md-end">Category:</label>
                             <div class="col-md-6">
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" placeholder="{{ old('name') }}">
+                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
                                 @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="sequence" class="col-md-4 col-form-label text-md-end">sequence:</label>
+                            <div class="col-md-6">
+                                <input type="number" name="sequence" id="sequence" class="form-control @error('sequence') is-invalid @enderror" value="{{ old('sequence') }}">
+                                @error('sequence')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -40,10 +50,10 @@
                             <label for="category" class="col-md-4 col-form-label text-md-end">Existing categories:</label>
                             <div class="col-md-6">
                                 <ul>
-                                @foreach($questioncategories as $category)
+                                    @foreach($questioncategories as $category)
                                     <li>
-                                    
-                                    {{ $category->name }}
+
+                                        {{ $category->name }}
 
                                     </li>
                                     @endforeach

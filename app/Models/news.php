@@ -14,4 +14,7 @@ class news extends Model
     public function user(){
         return $this->belongsTo('\App\Models\user');
     }
+    public function likes(){
+        return $this->hasMany('App\models\like');
+    }
 }
