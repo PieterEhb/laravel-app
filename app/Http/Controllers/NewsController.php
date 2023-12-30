@@ -27,7 +27,7 @@ class NewsController extends Controller
 
     public function adminIndex()
     {
-        $newsPosts = News::orderby('status','asc')->latest()->paginate(5)->withQueryString();
+        $newsPosts = News::orderby('status','asc')->latest()->paginate(5);
         return view('news.admin', compact('newsPosts'));
     }
     public function store(Request $request)

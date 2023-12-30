@@ -108,4 +108,10 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('user.profile', $user->id)->with('success', "Password Changed Successfully");
     }
+
+    public function index()
+    {
+        $users = User::all();
+        return view('user.index', compact('users'));
+    }
 }

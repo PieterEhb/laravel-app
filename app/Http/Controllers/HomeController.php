@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\contactform;
 use Illuminate\Http\Request;
 use App\Models\news;
+use App\Models\question;
 
 class HomeController extends Controller
 {
@@ -24,12 +26,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $newsPosts = News::latest()->take(5)->get();
+        $newsPosts = News::where('status','=','released')->latest()->take(5)->get();
         return view('home',compact('newsPosts'));
     }
 
     public function about()
     {
         return view('other.about');
+    }
+
+    public function adminIndex(){
+        $this->middleware('auth', ['except' => []]);
+        $this->middleware('admin', ['except' => []]);
+        $drafts = News::where('status','=','draft')->latest()->get();
+        $questions = question::latest()->take(5)->get();
+        $contactforms = contactform::where('status','=','new')->latest()->take(5)->get();
+        return view('adminhome',compact('drafts','questions','contactforms'));
     }
 }

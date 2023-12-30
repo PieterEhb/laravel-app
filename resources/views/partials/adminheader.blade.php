@@ -1,28 +1,20 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand text-danger" href="{{ route('adminIndex') }}">
+                <img src="/storage/app/public/images/factorio-logo.png" style="height: 40px;" alt="Factorio">Admin
                 </a>
 
-                <a class="navbar-brand" href="{{ route('news.index') }}">
+                <a class="navbar-brand" href="{{ route('news.adminNews') }}">
                      News
                 </a>
-
-                <a class="navbar-brand" href="{{ route('news.index') }}">
-                     ORDER
-                </a>
-
-                <a class="navbar-brand" href="{{ route('news.index') }}">
+                <a class="navbar-brand" href="{{ route('faq.adminFAQ') }}">
                      FAQ
                 </a>
-                <a class="navbar-brand" href="{{ route('news.index') }}">
+                <a class="navbar-brand" href="{{ route('contactform.index') }}">
                      Contact us
                 </a>
-                <a class="navbar-brand" href="{{ route('news.create') }}">
-                    Create News
-                </a>
-                <a class="navbar-brand" href="{{ route('news.create') }}">
-                    Create News
+                <a class="navbar-brand" href="{{ route('user.index') }}">
+                    Users
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

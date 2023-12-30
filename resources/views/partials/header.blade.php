@@ -10,7 +10,7 @@
                 <a class="navbar-brand text-white" href="{{ route('faq.index') }}">
                      FAQ
                 </a>
-                <a class="navbar-brand text-white" href="{{ route('contactForm.create') }}">
+                <a class="navbar-brand text-white" href="{{ route('contactform.create') }}">
                      Contact us
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -39,12 +39,26 @@
                                 </li>
                             @endif
                         @else
+                        @php
+                            $user = Auth::user()
+                        @endphp
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+                                    @if ($user->userinfo != null)
+                                    <img src="/storage/app/public/avatarImages/{{ $user->userinfo->image }}" alt="{{ $user->name}}" height="40px"> 
+                                    @else
+                                    {{ $user->name }}
+                                    @endif
 
+                                </a>
                                 <div class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="navbarDropdown">
+
+                                    @if ($user->is_admin)
+                                    <a class="dropdown-item bg-dark text-white" href="{{ route('adminIndex') }}">
+                                        Admin
+                                    </a>
+                                    @endif                                     
+
                                 <a class="dropdown-item bg-dark text-white" href="{{ route('user.profile', Auth::user()->id) }}">
                                         Profile
                                     </a>

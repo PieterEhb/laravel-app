@@ -42,8 +42,8 @@ class ContactformController extends Controller
     }
 
     public function show($id){
-        $contactForm = contactForm::findOrFail($id);
-        return view('contactForm.show', compact('contactForm'));
+        $contactform = contactForm::findOrFail($id);
+        return view('contactform.show', compact('contactform'));
     }
 
     public function edit(){

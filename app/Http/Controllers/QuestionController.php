@@ -16,6 +16,14 @@ class QuestionController extends Controller
         $this->middleware('admin',['except'=>['index','create','store']]);
     }
 
+    public function adminIndex()
+    {
+        $questions = question::where('status', '=', 'shown')->latest()->get();
+        $questioncategories = questioncategory::all();
+        //dd($questions);
+        return view('faq.index', compact('questions','questioncategories'));
+    }
+
     public function index()
     {
         $questions = question::where('status', '=', 'shown')->latest()->get();
@@ -35,6 +43,7 @@ class QuestionController extends Controller
         $validated = $request->validate([
             'question' => 'required|min:4',
             'response' => 'required|min:4',
+            'status' => 'in:shown,notShown|required',
             'category' => 'required|exists:questioncategories,id'
         ]);
         $question = new question();

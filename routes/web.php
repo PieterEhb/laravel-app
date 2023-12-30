@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactformController;
+use App\Http\Controllers\QuestioncategoryController;
 use App\Http\Controllers\QuestionController;
 
 /*
@@ -23,20 +24,24 @@ use App\Http\Controllers\QuestionController;
 /*Index Route*/
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
-
+Route::get('/adminIndex', [App\Http\Controllers\HomeController::class, 'adminIndex'])->name('adminIndex');
 
 /*user Routes*/
-
 Route::get('/user/profile/{id}',[UserController::class, 'profile'])->name('user.profile');
 Route::get('/user/edit/{id}',[UserController::class, 'edit'])->name('user.edit');
 Route::put('/user/update',[UserController::class, 'update'])->name('user.update');
 Route::get('/user/changepassword/{id}',[UserController::class, 'changePassword'])->name('user.changePassword');
 Route::post('/user/changepassword/{id}',[UserController::class, 'changePasswordSave'])->name('user.postChangePassword');
+Route::get('/users',[UserController::class, 'index'])->name('user.index');
+//promote user to admin
 
 /*News routes*/
+Route::get('/news/admin',[NewsController::class,'adminIndex'])->name('news.adminNews');
 Route::resource('news',NewsController::class);
 Route::get('/news/{newsId}/addComment',[CommentController::class,'comment'])->name('comment');
 Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name('addComment');
+
+
 
 /*Comments routes*/
 Route::get('/comment/{id}',[CommentController::class,'edit'])->name('comment.edit');
@@ -44,13 +49,15 @@ Route::post('/comment/update/{id}',[CommentController::class,'update'])->name('c
 Route::post('/comment/delete/{id}',[CommentController::class,'delete'])->name('comment.delete');
 
 /*contactForm routes*/
-Route::resource('/contactForm', ContactformController::class);
-
-/*order routes*/
+Route::resource('/contactform', ContactformController::class);
 
 /*FAQ routes*/
+Route::get('/faq/admin',[QuestionController::class,'adminIndex'])->name('faq.adminFAQ');
 Route::resource('/faq', QuestionController::class);
 
+
+/*FAQcategories routes*/
+Route::resource('/faqcategories', QuestioncategoryController::class);
 /*Auth Routes*/
 Auth::routes();
 
