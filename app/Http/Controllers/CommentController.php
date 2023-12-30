@@ -61,6 +61,12 @@ class CommentController extends Controller
         $comment = comment::findOrFail($id);
         $newsId = $comment->news->id;
         $comment->delete();
-        return redirect()->route('news.show',$newsId);
+        if(Auth::user()->is_admin && Auth::user()->id != $comment->user_Id)
+        {
+            return redirect()->route('news.adminShow',$newsId);
+        }else{
+            return redirect()->route('news.show',$newsId);
+        }
+        
     }
 }

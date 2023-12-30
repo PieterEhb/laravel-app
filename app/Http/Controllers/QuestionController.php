@@ -18,24 +18,24 @@ class QuestionController extends Controller
 
     public function adminIndex()
     {
-        $questions = question::where('status', '=', 'shown')->latest()->get();
+        $questions = question::all();
         $questioncategories = questioncategory::all();
         //dd($questions);
-        return view('faq.index', compact('questions','questioncategories'));
+        return view('faq.adminIndex', compact('questions','questioncategories'));
     }
 
     public function index()
     {
         $questions = question::where('status', '=', 'shown')->latest()->get();
-        $questioncategories = questioncategory::all();
+        $questioncategories = questioncategory::where('status', '=', 'shown')->get();
         //dd($questions);
         return view('faq.index', compact('questions','questioncategories'));
     }
 
     public function create()
     {
-        $questioncategeories = questioncategory::get();
-        return view('faq.create', compact('questioncategeories'));
+        $questioncategories = questioncategory::get();
+        return view('faq.create', compact('questioncategories'));
     }
 
     public function store(Request $request)
@@ -48,12 +48,12 @@ class QuestionController extends Controller
         ]);
         $question = new question();
         $question->question = $validated['question'];
-        $question->question = $validated['response'];
+        $question->response = $validated['response'];
         $question->category_id = $validated['category'];
         $question->user_id = Auth::user()->id;
-        $question->status = 'new';
+        $question->status = $validated['status'];
         $question->save();
-        return redirect()->route('faq.index')->with('success', "Question made Successfully");
+        return redirect()->route('faq.adminFAQ');
     }
 
     public function show($id)
@@ -86,7 +86,7 @@ class QuestionController extends Controller
         $question->category_id = $validated['category'];
         $question->status = $validated['status'];
         $question->save();
-        return redirect()->route('faq.index')->with('success', "Question Answered Successfully");
+        return redirect()->route('faq.adminFAQ');
     }
 
     public function destroy($id)
@@ -96,6 +96,6 @@ class QuestionController extends Controller
         }
         $question = question::findOrFail($id);
         $question->delete();
-        return redirect()->route('faq.index')->with('success', 'question deleted');
+        return redirect()->route('faq.adminFAQ');
     }
 }

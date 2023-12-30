@@ -41,7 +41,8 @@ class NewsController extends Controller
         $validated = $request->validate([
             'title' => 'required|min:4',
             'message' => 'required|min:4',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'in:draft,released|required'
         ]);
         dd($validated);
         if ($image = $validated['image']) {
@@ -53,10 +54,11 @@ class NewsController extends Controller
         $newsPost = new news();
         $newsPost->title = $validated['title'];
         $newsPost->message = $validated['message'];
+        $newsPost->status = $validated['status'];
         $newsPost->user_id = $user->id;
         $newsPost->image = $newsImage;
         $newsPost->save();
-        return redirect()->route('news.index')->with('success', "Post made Successfully");
+        return redirect()->route('news.adminNews');
     }
 
     public function create()
@@ -71,6 +73,12 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         return view('news.show', compact('news'));
+    }
+
+    public function adminShow($id)
+    {
+        $news = News::findOrFail($id);
+        return view('news.adminshow', compact('news'));
     }
 
     public function edit($id)
@@ -90,10 +98,12 @@ class NewsController extends Controller
         /*         if(!$user->is_admin){
             abort(403);
         } */
+        
         $validated = $request->validate([
             'title' => 'required|min:5',
             'message' => 'required|min:20',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'in:draft,released|required'
         ]);
         if (Arr::exists($validated, 'image')) {
             /*Delete old image*/
@@ -109,9 +119,10 @@ class NewsController extends Controller
         }
         $newsPost->title = $validated['title'];
         $newsPost->message = $validated['message'];
+        $newsPost->status = $validated['status'];
         $newsPost->user_id = $user->id;
         $newsPost->save();
-        return redirect()->route('news.show', $id)->with('success', "Post made Successfully");
+        return redirect()->route('news.adminNews', $id);
     }
 
     public function destroy($id)
@@ -123,6 +134,6 @@ class NewsController extends Controller
         //delete file from storage
         $comment = Comment::where('news_id', '=', $news->id)->delete();
         $news->delete();
-        return redirect()->route('news.index')->with('success', 'post deleted');
+        return redirect()->route('news.adminNews');
     }
 }

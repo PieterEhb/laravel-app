@@ -30,7 +30,7 @@
             <div class="card border-warning bg-dark">
                 <div class="card-header" style="color: orange">Ask us</div>
                 <div class="card-body">
-                   <a class="btn btn-warning" href="{{route('contactForm.create')}}"><h4>Ask Question</h4></a> 
+                   <a class="btn btn-warning" href="{{route('contactform.create')}}"><h4>Ask Question</h4></a> 
                 </div>
 
             </div>

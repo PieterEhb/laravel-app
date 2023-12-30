@@ -37,6 +37,7 @@ Route::get('/users',[UserController::class, 'index'])->name('user.index');
 
 /*News routes*/
 Route::get('/news/admin',[NewsController::class,'adminIndex'])->name('news.adminNews');
+Route::get('/news/{newsId}/admin',[NewsController::class,'adminShow'])->name('news.adminShow');
 Route::resource('news',NewsController::class);
 Route::get('/news/{newsId}/addComment',[CommentController::class,'comment'])->name('comment');
 Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name('addComment');

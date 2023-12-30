@@ -39,8 +39,9 @@ class HomeController extends Controller
         $this->middleware('auth', ['except' => []]);
         $this->middleware('admin', ['except' => []]);
         $drafts = News::where('status','=','draft')->latest()->get();
+        $releasedPosts = News::where('status','=','released')->latest()->take(2)->get();
         $questions = question::latest()->take(5)->get();
         $contactforms = contactform::where('status','=','new')->latest()->take(5)->get();
-        return view('adminhome',compact('drafts','questions','contactforms'));
+        return view('adminhome',compact('drafts','releasedPosts','questions','contactforms'));
     }
 }

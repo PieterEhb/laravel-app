@@ -8,7 +8,7 @@
                 <div class="card-header" style="color: orange;">Ask Us</div>
 
                 <div class="card-body text-white">
-                    <form method="POST" action="{{ route('contactForm.store') }}">
+                    <form method="POST" action="{{ route('contactform.store') }}">
                         @csrf
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">name:</label>

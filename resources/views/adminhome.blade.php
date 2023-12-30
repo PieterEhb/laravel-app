@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="card border-dark col">
                     <div class="card-header" style="color: orange"><h3>Drafts</h3></div>
-                    @foreach ($drafts as $draft )
+                    @foreach ($drafts as $newspost )
                     @include('partials.newsAdminpartial')
                     @endforeach
                 </div>
@@ -21,6 +21,15 @@
                     <div class="card-header" style="color: orange"><h3>contact requests</h3></div>
                     @foreach ($contactforms as $contactform )
                     @include('partials.contactFormsAdminpartial')
+                    @endforeach
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="card border-dark col-md-6">
+                    <div class="card-header" style="color: orange"><h3>Released</h3></div>
+                    @foreach ($releasedPosts as $newspost )
+                    @include('partials.newsAdminpartial')
                     @endforeach
                 </div>
             </div>

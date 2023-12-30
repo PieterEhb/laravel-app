@@ -50,6 +50,16 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                        <label for="status" class="col-md-4 col-form-label text-md-end">status:</label>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" id="status" name="status" required focus>
+                                        <option @if ($news->status == 'draft') selected @endif value="draft">draft</option>
+                                        <option @if ($news->status =='released') selected @endif value="released">released</option>
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-md-4 col-form-label"></div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-warning">Create</button>
