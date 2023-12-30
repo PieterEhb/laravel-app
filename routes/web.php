@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactformController;
 use App\Http\Controllers\QuestioncategoryController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ReportsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,8 @@ Route::put('/user/update',[UserController::class, 'update'])->name('user.update'
 Route::get('/user/changepassword/{id}',[UserController::class, 'changePassword'])->name('user.changePassword');
 Route::post('/user/changepassword/{id}',[UserController::class, 'changePasswordSave'])->name('user.postChangePassword');
 Route::get('/users',[UserController::class, 'index'])->name('user.index');
-//promote user to admin
+Route::delete('/user/{id}',[UserController::class, 'destroy'])->name('user.destroy');
+Route::get('/user/{id}/updateRole',[UserController::class, 'updateRole'])->name('user.updateRole');
 
 /*News routes*/
 Route::get('/news/admin',[NewsController::class,'adminIndex'])->name('news.adminNews');
@@ -48,6 +50,7 @@ Route::post('/news/{newsId}/addComment',[CommentController::class,'add'])->name(
 Route::get('/comment/{id}',[CommentController::class,'edit'])->name('comment.edit');
 Route::post('/comment/update/{id}',[CommentController::class,'update'])->name('comment.update');
 Route::post('/comment/delete/{id}',[CommentController::class,'delete'])->name('comment.delete');
+Route::get('/comment/{id}/report',[ReportsController::class,'reportComment'])->name('comment.report');
 
 /*contactForm routes*/
 Route::resource('/contactform', ContactformController::class);
@@ -59,6 +62,7 @@ Route::resource('/faq', QuestionController::class);
 
 /*FAQcategories routes*/
 Route::resource('/faqcategories', QuestioncategoryController::class);
+
 /*Auth Routes*/
 Auth::routes();
 

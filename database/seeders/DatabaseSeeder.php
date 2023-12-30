@@ -17,6 +17,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Deleted',
             'email' => 'Deleted',
             'password' =>'shouldBeSomeVeryLongAndComplexPW',
+            'is_admin' => 0
+         ]);
+
+         \App\Models\User::factory()->create([
+            'id' => 2,
+            'name' => 'superAdmin',
+            'email' => 'superAdmin',
+            'password' =>'shouldBeSomeVeryLongAndComplexPW',
             'is_admin' => 1
          ]);
 
@@ -32,7 +40,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'test2@student.ehb.be',
             'password' =>'Test1234'
          ]);
-         
+         \App\Models\questioncategory::factory()->create([
+            'name' => 'General',
+            'status' => 'shown'
+         ]);
          \App\Models\news::factory(10)->create();
          \App\Models\question::factory(3)->create();
     }

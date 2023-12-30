@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\comment;
 use App\Models\contactform;
 use Illuminate\Http\Request;
 use App\Models\news;
 use App\Models\question;
+use App\Models\reports;
 
 class HomeController extends Controller
 {
@@ -42,6 +44,7 @@ class HomeController extends Controller
         $releasedPosts = News::where('status','=','released')->latest()->take(2)->get();
         $questions = question::latest()->take(5)->get();
         $contactforms = contactform::where('status','=','new')->latest()->take(5)->get();
-        return view('adminhome',compact('drafts','releasedPosts','questions','contactforms'));
+        $reportedcomments = comment::where('is_reported','=','1')->get();
+        return view('adminhome',compact('drafts','releasedPosts','questions','contactforms','reportedcomments'));
     }
 }

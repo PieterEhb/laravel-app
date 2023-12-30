@@ -18,9 +18,10 @@ class questionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 2,
-            'question' => fake()->paragraph(),
-            'status' => fake()->randomElement(['new' , 'notShown'])
+            'question' => fake()->paragraph(1),
+            'response' => fake()->paragraph(1),
+            'category_id' => 1,
+            'status' => fake()->randomElement(['shown' , 'notShown'])
         ];
     }
 }

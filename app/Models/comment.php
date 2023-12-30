@@ -15,4 +15,7 @@ class comment extends Model
     public function user(){
         return $this->belongsTo('\App\Models\user');
     }
+    public function report(){
+        return $this->hasMany('\App\Models\reports');
+    }
 }

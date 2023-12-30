@@ -54,4 +54,7 @@ class User extends Authenticatable
     public function question(){
         return $this->hasMany('\App\Models\question');
     }
+    public function report(){
+        return $this->hasMany('\App\Models\reports');
+    }
 }

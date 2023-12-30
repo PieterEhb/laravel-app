@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\comment;
+use App\Models\contactform;
+use App\Models\news;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Userinfo;
@@ -20,13 +23,13 @@ class UserController extends Controller
 
     protected function createUserinfo($userId)
     {
-        //lookup userinfo
-        $userinfo = userinfo::where('user_id', '=', $userId)->first();
+        //lookup userInfo
+        $userInfo = userInfo::where('user_id', '=', $userId)->first();
 
-        if ($userinfo == null) {
-            $userinfo = new userinfo();
-            $userinfo->user_id = $userId;
-            $userinfo->save();
+        if ($userInfo == null) {
+            $userInfo = new userInfo();
+            $userInfo->user_id = $userId;
+            $userInfo->save();
             error_log('added record');
         }
         return;
@@ -51,7 +54,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        $userinfo = userinfo::where('user_id', '=', $user->id)->first();
+        $userInfo = userInfo::where('user_id', '=', $user->id)->first();
         $validated = $request->validate(
             [
                 'birthday' => 'required',
@@ -61,18 +64,18 @@ class UserController extends Controller
         );
         if (Arr::exists($validated, 'avatar') && $validated['avatar'] != null) {
             /*Delete old image*/
-            $oldImage = $userinfo->image;
+            $oldImage = $userInfo->image;
             Storage::delete($oldImage);
             /*Set new image*/
             $image = $validated['avatar'];
             $destinationPath = 'storage/app/public/avatarImages/';
             $avatar = "avatar" . date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $avatar);
-            $userinfo->image = $avatar;
+            $userInfo->image = $avatar;
         }
-        $userinfo->birthday = $validated['birthday'];
-        $userinfo->bio = $validated['bio'];
-        $userinfo->save();
+        $userInfo->birthday = $validated['birthday'];
+        $userInfo->bio = $validated['bio'];
+        $userInfo->save();
         return redirect()->route('user.profile', $user->id)->with('success', "Profile Changed Successfully");
     }
 
@@ -111,7 +114,45 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::whereNotIn('id', [1,2])->get();
         return view('user.index', compact('users'));
+    }
+
+    public function destroy($id)
+    {
+        if(!Auth::user()->is_admin || Auth::user()->id != $id){
+            abort(403,'you can not do this');
+        };
+        $user = User::findOrFail($id);
+        $userInfo = Userinfo::where('user_id','=',$id);
+        /*update linked comments to deleted*/
+        $comments = comment::where('user_id','=',$user->id)->update(['user_id'=>1]);
+        /*update linked news to deleted*/
+        $news = news::where('user_id','=',$user->id)->update(['user_id'=>1]);
+        /*update linked contactForms to deleted*/
+        $contactforms = contactform::where('user_id','=',$user->id)->update(['user_id'=>1]);
+        /*delete userInfo*/
+        if($userInfo != null){
+            $oldImage = $userInfo->image;
+            Storage::delete($oldImage);
+            $userInfo->delete();
+        }
+        $user->delete();
+        return redirect()->route('user.index');
+    }
+    
+    public function updateRole($id){
+        if(!Auth::user()->is_admin || Auth::user()->id == $id){
+            abort(403,'you can not do this');
+        };
+        $user = User::findOrFail($id);
+        if(!$user->is_admin){
+            $user->is_admin = 1;
+            $user->save();
+        }else{
+            $user->is_admin = 0;
+            $user->save();
+        }
+        return redirect()->route('user.index');
     }
 }

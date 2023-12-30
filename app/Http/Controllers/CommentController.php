@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\comment;
 use App\Models\news;
-
+use App\Models\reports;
 
 class CommentController extends Controller
 {
@@ -35,10 +35,11 @@ class CommentController extends Controller
         $comment->user_id = Auth::user()->id;
         $comment->news_id = $newsId;
         $comment->save();
-        return redirect()->route('news.show',$newsId);
+        return redirect()->route('news.show', $newsId);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $comment = comment::findOrFail($id);
         return view('comment.edit', compact('comment'));
     }
@@ -54,19 +55,19 @@ class CommentController extends Controller
         $comment->message = $validated['message'];
         $newsId = $comment->news->id;
         $comment->save();
-        return redirect()->route('news.show',$newsId);
+        return redirect()->route('news.show', $newsId);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $comment = comment::findOrFail($id);
         $newsId = $comment->news->id;
+        $reports= reports::where('comment_id','=',$id)->delete();
         $comment->delete();
-        if(Auth::user()->is_admin && Auth::user()->id != $comment->user_Id)
-        {
-            return redirect()->route('news.adminShow',$newsId);
-        }else{
-            return redirect()->route('news.show',$newsId);
+        if (Auth::user()->is_admin && Auth::user()->id != $comment->user_Id) {
+            return back();
+        } else {
+            return redirect()->route('news.show', $newsId);
         }
-        
     }
 }

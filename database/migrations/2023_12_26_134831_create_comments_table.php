@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('message',250);
             $table->integer('user_id');
             $table->integer('news_id');
+            $table->boolean('is_reported')->default(0);
             $table->timestamps();
         });
     }

@@ -53,6 +53,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        <div class="col ms-2 p-0">
+                            <div class="card border-dark">
+                                <div class="card-header" style="color: orange">
+                                    <h3>Reported comments</h3>
+                                </div>
+                                @foreach ($reportedcomments as $comment )
+                                @include('partials.reportpartial')
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
