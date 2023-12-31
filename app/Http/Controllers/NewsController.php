@@ -34,24 +34,17 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        /*         if(!$user->is_admin){
-            abort(403);
-        } */
-        //dd($request);
-        error_log('we get here');
         $validated = $request->validate([
             'title' => 'required|min:4',
             'message' => 'required|min:4',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'in:draft,released|required'
         ]);
-        dd($validated);
         if ($image = $validated['image']) {
             $destinationPath = 'storage/app/public/newsimages/';
             $newsImage = "newsimage" . date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $newsImage);
         }
-        error_log('we get here 2');
         $newsPost = new news();
         $newsPost->title = $validated['title'];
         $newsPost->message = $validated['message'];
@@ -109,8 +102,14 @@ class NewsController extends Controller
         if (Arr::exists($validated, 'image')) {
             /*Delete old image*/
             $oldImage = $newsPost->image;
-            // dd($oldImage);
-            Storage::delete('/storage/app/public/newsimages/' . $oldImage);
+            if($oldImage != 'newsPlaceholder.png'){
+                // 
+                if(Storage::exists('public\storage\app\public\newsimages\newsimage20231229132230.jpg')){
+                    Storage::delete('storage/app/public/newsimages/'.$oldImage);
+                }else{
+                   // dd('app/public/newsimages/'.$oldImage);
+                }
+            }
             /*Set new image*/
             $image = $validated['image'];
             $destinationPath = 'storage/app/public/newsimages/';

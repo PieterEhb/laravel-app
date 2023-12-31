@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\comment;
 use App\Models\contactform;
 use App\Models\news;
+use App\Models\Speedrun;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Userinfo;
@@ -21,6 +22,7 @@ class UserController extends Controller
         $this->middleware('auth', ['except' => ['profile']]);
     }
 
+    /*function exists incase register new user breaks*/
     protected function createUserinfo($userId)
     {
         //lookup userInfo
@@ -120,8 +122,11 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if(!Auth::user()->is_admin || Auth::user()->id != $id){
-            abort(403,'you can not do this');
+        if(Auth::user()->id != $id){
+            if(!Auth::user()->is_admin){
+                abort(403,'you can not do this');
+            }
+            
         };
         $user = User::findOrFail($id);
         $userInfo = Userinfo::where('user_id','=',$id);
@@ -133,12 +138,20 @@ class UserController extends Controller
         $contactforms = contactform::where('user_id','=',$user->id)->update(['user_id'=>1]);
         /*delete userInfo*/
         if($userInfo != null){
-            $oldImage = $userInfo->image;
-            Storage::delete($oldImage);
+            //$oldImage = $userInfo->image;
+            //Storage::delete($oldImage);
             $userInfo->delete();
         }
-        $user->delete();
-        return redirect()->route('user.index');
+        /*delete speedruns*/
+        $speedruns = Speedrun::where('user_id','=',$user->id)->delete();
+        if(Auth::user()->is_admin && Auth::user()->id != $id){
+            $user->delete();
+            return redirect()->route('user.index');
+        }else{
+            $user->delete();
+            return redirect()->route('home');
+        }
+
     }
     
     public function updateRole($id){

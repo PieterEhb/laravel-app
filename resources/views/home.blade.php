@@ -5,8 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card border-dark  mb-2 row">
-                <div class="card-header bg-dark" style="color: orange"><h3>About the game</h3></div>
-                <div class="card-body text-white bg-dark"> 
+                <div class="card-header bg-dark" style="color: orange">
+                    <h3>About the game</h3>
+                </div>
+                <div class="card-body text-white bg-dark">
                     <p>
                         Factorio is a game in which you build and maintain factories.
                         <br>
@@ -15,16 +17,80 @@
                 </div>
             </div>
             <div class="row">
-                <div class="card border-dark bg-dark col">
-                    <div class="card-header bg-dark" style="color: orange"><h3>News</h3></div>
-                    @foreach ($newsPosts as $newspost )
-                    @include('partials.news overview partial')
-                    @endforeach
+                <div class="col ps-0">
+                    <div class="card border-dark bg-dark">
+                        <div class="card-header bg-dark" style="color: orange">
+                            <h3>News</h3>
+                        </div>
+                        @foreach ($newsPosts as $newspost )
+                        @include('partials.newsOverviewPartial')
+                        @endforeach
+                    </div>
                 </div>
-                <div class="col ms-2 p-0">
-                    <div class="card border-dark bg-dark p-2">
-                        <div class="card-header bg-dark " style="border-bottom: 1px solid orange; color: orange"><h3>Trailer</h3></div>
-                        <iframe class="mt-2" width="620" height="400" src="https://www.youtube.com/embed/J8SBp4SyvLc" title="Factorio - Trailer 2020" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="col">
+                    <div class="row">
+                        <div class="card mb-2   border-dark bg-dark">
+                            <div class="card-header bg-dark" style="color: orange">
+                                <h3>Latest Release</h3>
+                            </div>
+                            <div class="card-body text-white bg-dark">
+                                <p>Stable: 1.1.100</p>
+                                <hr>
+                                <p>Experimental: 1.1.101</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="card mb-2 border-dark bg-dark p-2 ">
+                                <div class="card-header bg-dark " style="border-bottom: 1px solid orange; color: orange">
+                                    <h3>Speedruns any%</h3>
+                                </div>
+                                <table class="table-warning text-white">
+                                    <tr>
+                                        <th>rank</th>
+                                        <th>user</th>
+                                        <th>time</th>
+                                        <th>post date</th>
+                                    </tr>
+                               @php
+                                   $rank = 1;
+                               @endphp
+                                @foreach ($speedruns as $speedrun )
+                                @include('partials.indexOverviewPartial')
+                                @php
+                                   $rank++;
+                               @endphp
+                                @endforeach
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="card mb-2 border-dark bg-dark p-2 ">
+                                <div class="card-header bg-dark " style="border-bottom: 1px solid orange; color: orange">
+                                    <h3>Speedruns default</h3>
+                                </div>
+                                <table class="table-warning text-white">
+                                    <tr>
+                                        <th>rank</th>
+                                        <th>user</th>
+                                        <th>time</th>
+                                        <th>post date</th>
+                                    </tr>
+                               @php
+                                   $rank = 1;
+                               @endphp
+                                @foreach ($speedrunsDefault as $speedrun )
+                                @include('partials.indexOverviewPartial')
+                                @php
+                                   $rank++;
+                               @endphp
+                                @endforeach
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -57,4 +57,7 @@ class User extends Authenticatable
     public function report(){
         return $this->hasMany('\App\Models\reports');
     }
+    public function speedruns(){
+        return $this->hasMany('\App\Models\Speedrun');
+    }
 }

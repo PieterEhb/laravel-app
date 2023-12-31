@@ -11,6 +11,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\QuestioncategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\SpeedrunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,11 @@ Route::resource('/faq', QuestionController::class);
 
 /*FAQcategories routes*/
 Route::resource('/faqcategories', QuestioncategoryController::class);
+
+/*Speedrun routes*/
+Route::get('/speedrun/admin',[SpeedrunController::class,'adminIndex'])->name('speedrun.adminIndex');
+Route::get('/speedrun/{runId}/admin',[SpeedrunController::class,'adminShow'])->name('speedrun.adminShow');
+Route::resource('/speedrun', SpeedrunController::class);
 
 /*Auth Routes*/
 Auth::routes();

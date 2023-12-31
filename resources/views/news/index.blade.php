@@ -8,7 +8,7 @@
             <div class="card border-dark bg-dark">
                 <div class="card-header" style="color: orange">All News</div>
                 @foreach ($newsPosts as $newspost )
-                @include('partials.news overview partial')
+                @include('partials.newsOverviewPartial')
                 @endforeach
                 <p>{{ $newsPosts->links() }}</p>
             </div>

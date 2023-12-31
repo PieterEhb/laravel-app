@@ -7,6 +7,12 @@
                 <a class="navbar-brand text-white" href="{{ route('news.index') }}">
                      News
                 </a>
+                <a class="navbar-brand text-white" href="{{ route('speedrun.index') }}">
+                     Speedruns
+                </a>
+                <a class="navbar-brand text-white" href="{{ route('speedrun.create') }}">
+                     upload Speedrun
+                </a>
                 <a class="navbar-brand text-white" href="{{ route('faq.index') }}">
                      FAQ
                 </a>

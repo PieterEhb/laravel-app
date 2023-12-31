@@ -7,6 +7,9 @@
                 <a class="navbar-brand" href="{{ route('news.adminNews') }}">
                      News
                 </a>
+                <a class="navbar-brand" href="{{ route('speedrun.adminIndex') }}">
+                     Speedruns
+                </a>
                 <a class="navbar-brand" href="{{ route('faq.adminFAQ') }}">
                      FAQ
                 </a>

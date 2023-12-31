@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\news;
 use App\Models\question;
 use App\Models\reports;
+use App\Models\Speedrun;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,9 @@ class HomeController extends Controller
     public function index()
     {
         $newsPosts = News::where('status','=','released')->latest()->take(5)->get();
-        return view('home',compact('newsPosts'));
+        $speedruns = Speedrun::where('status', '=', 'accepted')->where('category','=','any%')->orderBy('time_seconds', 'asc')->take(5)->get();
+        $speedrunsDefault = Speedrun::where('status', '=', 'accepted')->where('category','=','default settings')->orderBy('time_seconds', 'asc')->take(5)->get();
+        return view('home',compact('newsPosts', 'speedruns','speedrunsDefault'));
     }
 
     public function about()
