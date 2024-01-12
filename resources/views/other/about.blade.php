@@ -9,6 +9,7 @@
         <div class="card-body bg-secondary text-white">
             <p class="card-text">App created by Pieter De Pauw</p>
             <p class="card-text">resources used to build app</p>
+            <p class="card-text">github repo:https://github.com/PieterEhb/laravel-app</p>
             <ul>
                 <li>
                     <p class="card-text">made with laravel: https://laravel.com/</p>
