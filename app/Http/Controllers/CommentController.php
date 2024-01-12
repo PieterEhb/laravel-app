@@ -27,7 +27,7 @@ class CommentController extends Controller
         $newsPost = news::findOrFail($newsId);
         $validated = $request->validate(
             [
-                'message' => 'required|min:5'
+                'message' => 'required|min:2'
             ]
         );
         $comment = new Comment();
@@ -49,7 +49,7 @@ class CommentController extends Controller
         $comment = comment::findOrFail($id);
         $validated = $request->validate(
             [
-                'message' => 'required|min:5'
+                'message' => 'required|min:2'
             ]
         );
         $comment->message = $validated['message'];

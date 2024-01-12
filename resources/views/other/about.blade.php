@@ -34,6 +34,15 @@
                 <li>
                     <p class="card-text">Bootstrap</p>
                 </li>
+                <li>
+                    <p class="card-text">ChatGPT</p>
+                </li>
+                <li>
+                    <p class="card-text">https://www.factorio.com/</p>
+                </li>
+                <li>
+                    <p class="card-text">https://www.speedrun.com/</p>
+                </li>
             </ul>
         </div>
     </div>

@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card bg-dark">
+            <div class="card">
                 <div class="card-header" style="color: orange;">create news</div>
 
-                <div class="card-body text-white">
+                <div class="card-body">
                     <form method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
@@ -54,8 +54,8 @@
 
                                 <div class="col-md-6">
                                     <select class="form-control" id="status" name="status" required focus>
-                                        <option @if ($news->status == 'draft') selected @endif value="draft">draft</option>
-                                        <option @if ($news->status =='released') selected @endif value="released">released</option>
+                                        <option  value="draft">draft</option>
+                                        <option value="released">released</option>
                                     </select>
                                 </div>
                         </div>

@@ -94,8 +94,8 @@ class NewsController extends Controller
         } */
         
         $validated = $request->validate([
-            'title' => 'required|min:5',
-            'message' => 'required|min:20',
+            'title' => 'required|min:4',
+            'message' => 'required|min:4',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'in:draft,released|required'
         ]);

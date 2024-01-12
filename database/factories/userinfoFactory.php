@@ -19,7 +19,7 @@ class userinfoFactory extends Factory
     {
         return [
             'user_id' => fake()->name(),
-            'avatar' => fake()->unique()->safeEmail(),
+            'image' => fake()->unique()->safeEmail(),
             'birthday' => now(),
             'bio' => Str::random(20)
         ];

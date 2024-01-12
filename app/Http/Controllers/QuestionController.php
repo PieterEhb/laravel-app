@@ -75,8 +75,8 @@ class QuestionController extends Controller
     {
         $question = question::findOrFail($id);
         $validated = $request->validate([
-            'question' => 'required|min:3',
-            'response' => 'required|min:2',
+            'question' => 'required|min:4',
+            'response' => 'required|min:4',
             'category' => 'required|exists:questioncategories,id',
             'status' => 'in:shown,notShown|required'
         ]);

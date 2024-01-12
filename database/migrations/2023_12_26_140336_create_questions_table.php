@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question',250);
-            $table->string('response',250)->nullable();
+            $table->string('question',500);
+            $table->string('response',500)->nullable();
             $table->integer('category_id')->default(0);
             $table->enum('status',['new','notShown','shown']);
             $table->timestamps();

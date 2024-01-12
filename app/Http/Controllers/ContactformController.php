@@ -29,9 +29,9 @@ class ContactformController extends Controller
 
     public function store(Request $request){
         $validate = $request->validate([
-            'name' =>'required|min:5',
+            'name' =>'required|min:3',
             'email' =>'required|email',
-            'message' => 'required|min:10'
+            'message' => 'required|min:5'
         ]);
         $contactForm = new contactForm();
         $contactForm->name = $validate['name'];
@@ -59,6 +59,7 @@ class ContactformController extends Controller
         ]);
         $contactform->response = $validate['response'];
         $contactform->status = 'finished';
+        $contactform->user_id = Auth::user()->id;
         $contactform->save();
         return redirect()->route('contactform.index');
     }
